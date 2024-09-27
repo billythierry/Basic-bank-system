@@ -4,7 +4,7 @@ class BankAccount {
         this.saldo = saldo;
     }
 
-    deposit() {
+    async deposit() {
         while (true) {
             let tambah = Number(prompt("Masukkan jumlah yang ditambahkan: "));
     
@@ -14,13 +14,15 @@ class BankAccount {
                 console.log("Tolong masukkan angka");
             } else {
                 this.saldo += tambah;
+                console.log("Proses menambahkan saldo sedang berlangsung...");
+                await new Promise(resolve => setTimeout(resolve, 2000));
                 console.log(`Jumlah saldo anda sekarang Rp ${this.saldo}`);
                 break;
             }
         }
     }
 
-    withdraw() {
+    async withdraw() {
         while (true) {
             let kurang = Number(prompt("Masukkan jumlah yang ingin diambil: "));
         
@@ -34,6 +36,8 @@ class BankAccount {
                     break;
                 }else {
                     this.saldo -= kurang;
+                    console.log("Proses penarikan uang sedang berlangsung...");
+                    await new Promise(resolve => setTimeout(resolve, 2000));
                     console.log(`Penarikan berhasil, jumlah saldo anda sekarang Rp ${this.saldo}`);
                     break;
                 }
@@ -42,13 +46,13 @@ class BankAccount {
     }
 }
 
-
-try {
-const Nasabah1 = new BankAccount('Windah', 5000);
-console.log(`Halo ${Nasabah1.nama}, Total saldo anda Rp${Nasabah1.saldo}`);
-Nasabah1.deposit();
-Nasabah1.withdraw();
-} catch (err) {
-console.error(err);
-}
-
+(async () => {
+    try {
+        const Nasabah1 = new BankAccount('Windah', 5000);
+        console.log(`Halo ${Nasabah1.nama}, Total saldo anda Rp${Nasabah1.saldo}`);
+        await Nasabah1.deposit();
+        await Nasabah1.withdraw();
+    } catch (err) {
+        console.error(err);
+    }
+})();
